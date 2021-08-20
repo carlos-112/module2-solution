@@ -4,16 +4,14 @@
     angular.module('ShoppingListCheckOff', [])
     .controller('ToBuyController', ToBuyController)
     .controller('AlreadyBoughtController', AlreadyBoughtController)
-    .provider('ShoppingListCheckOffService', ShoppingListCheckOffServiceProvider)
+    .service('ShoppingListCheckOffService', ShoppingListCheckOffService)
 
     ToBuyController.$inject = ['ShoppingListCheckOffService'];
     function ToBuyController(ShoppingListCheckOffService) {
         var list = this;
-
         list.items = ShoppingListCheckOffService.getBuyItems();
-
         list.moveItem = function (itemIndex) {
-          ShoppingListCheckOffService.moveItem(itemIndex);
+        ShoppingListCheckOffService.moveItem(itemIndex);
         };
     }
 
@@ -23,9 +21,8 @@
         list.items = ShoppingListCheckOffService.getBoughtItems();
     }
 
-    function ShoppingListCheckOffService(minItems) {
+    function ShoppingListCheckOffService() {
         var service = this;
-      
         // List of shopping items
         var BuyItems = [
         { name: "bread", quantity: "1 loaf" },
@@ -51,14 +48,4 @@
         };
 
       }
-
-      function ShoppingListCheckOffServiceProvider() {
-        var provider = this;
-
-        provider.$get = function () {
-          var shoppingList = new ShoppingListCheckOffService();
-          return shoppingList;
-        };
-      }
-
 })();
